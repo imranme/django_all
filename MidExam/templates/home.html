@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% load static %} {% load crispy_forms_tags %} 
+{% block title %}CarBazar Home Page{% endblock title %}
+{%block content %}
+
+<div class="d-flex align-items-center bg-info-subtle justify-content-between">
+  <section class="col-4 mx-3">
+    <p>
+      Our passion is about giving people the freedom to explore their world and
+      reach their full potential. Whether physically, through our dependable
+      vehicles and innovative mobility solutions, or emotionally, through
+      inspiring design and intimate experiences—our ever-evolving desire to help
+      will never end.
+    </p>
+  </section>
+  <section class="col-8">
+    <img style='width:80%'src="{% static "image/CoverPage.jpg" %}" alt="">
+  </section>
+</div>
+
+<div class="card">
+  <div class="card-body">
+   <h4>Total Car Found : {{data | length}} </h4>
+  </div>
+</div>
+
+<div class="d-flex flex-wrap px-5 pt-5 mb-5">
+  {% for value in brand %}
+  <div class="card-body">
+   
+    <a class='btn btn-primary text-decoration-none fw-bold px-4' href="{% url "brand_wise_car" value.slug %}" class="card-link">{{value.name}}</a>
+  </div>
+  {% endfor %}
+</div>
+</div>
+
+
+<div class="d-flex flex-wrap px-5 pt-5 mb-5">
+  
+  {% for value in data %}
+  <div class="col-sm-3">
+    <div class="card mx-2">
+      <div class="card-body">          
+          <img src="{{ value.Image.url }}" class="card-img-top" alt="...">
+          <h5>Price :{{value.Price}}</h5>
+          <h5>Car Name :{{value.Name}}</h5>
+          <h5>Brand Name :{{value.BrandName.name}}</h5>
+          <div class='d-flex justify-content-center mt-3'>
+            <a class='btn btn-success' href="{% url "details" value.id %}">View Details</a>
+          </div>
+        
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+
+</div>
+
+
+{% endblock content %}

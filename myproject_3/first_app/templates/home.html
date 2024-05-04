@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h1>This is a Home page</h1>
+<h2>Author: {{author}}</h2>
+<h2>Age: {{age}}</h2>
+<h2>Age: {{list}}</h2>
+
+{% comment %} conditional statement  {% endcomment %}
+{% if age >= 20 %}
+    <h4>You will be get driving license</h4>
+{%elif age >= 10 and age <= 19 %}
+    <h4>You will not get driving license</h4>
+{% else %}
+   <h4>You're a child</h4>
+{%endif%}
+    
+
+
+
+</body>
+</html>
