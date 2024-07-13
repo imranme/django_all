@@ -64,16 +64,29 @@
 //     })
 // );
 
-20
 
-var Arr = [1, 7, 2, 8, 3, 4, 5, 0, 9];
 
-for (var i = 1; i < Arr.length; i++)
-    for (var j = 0; j < i; j++)
-        if (Arr[i] < Arr[j]) {
-            var x = Arr[i];
-            Arr[i] = Arr[j];
-            Arr[j] = x;
-        }
+// var Arr = [1, 7, 2, 8, 3, 4, 5, 0, 9];
 
-console.log(Arr);
+// for (var i = 1; i < Arr.length; i++)
+//     for (var j = 0; j < i; j++)
+//         if (Arr[i] < Arr[j]) {
+//             var x = Arr[i];
+//             Arr[i] = Arr[j];
+//             Arr[j] = x;
+//         }
+
+// console.log(Arr);
+
+var friends = ["rahim","karim","salam","herokhan" ];
+
+var largestName = friends[0];
+
+for (var i = 0; i < friends.length; i++){
+    var element = friends[i];
+
+    if (element.length > largestName.length){
+        largestName = element;
+    }
+}
+console.log(largestName);
