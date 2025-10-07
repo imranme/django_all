@@ -1,0 +1,62 @@
+export const mentorsData = [
+  {
+    id: '1',
+    name: 'Dr. Priya Sharma',
+    title: 'Senior Software Engineer at Google',
+    specialty: 'Technical Interview',
+    rating: 4.9,
+    reviews: 127,
+    experience: '8+ years',
+    price: 1500,
+    image: '/src/assets/mentor-1.jpg',
+    availability: 'Available Today',
+    totalSessions: 245,
+    bio: 'Experienced software engineer with expertise in system design and algorithms. I help candidates prepare for top-tier tech company interviews with personalized mock sessions.',
+    skills: ['System Design', 'Algorithms', 'Data Structures', 'Python', 'Java', 'JavaScript']
+  },
+  {
+    id: '2',
+    name: 'Md. Rahman Ahmed',
+    title: 'Product Manager at Microsoft',
+    specialty: 'Product Management',
+    rating: 4.8,
+    reviews: 89,
+    experience: '6+ years',
+    price: 1200,
+    image: '/src/assets/mentor-2.jpg',
+    availability: 'Available Tomorrow',
+    totalSessions: 156,
+    bio: 'Product management professional with experience launching successful products. I provide comprehensive PM interview preparation including case studies and behavioral questions.',
+    skills: ['Product Strategy', 'Market Research', 'User Experience', 'Analytics', 'Leadership']
+  },
+  {
+    id: '3',
+    name: 'Fatima Khan',
+    title: 'UX Designer at Meta',
+    specialty: 'Design Interview',
+    rating: 4.9,
+    reviews: 93,
+    experience: '5+ years',
+    price: 1000,
+    image: '/src/assets/mentor-3.jpg',
+    availability: 'Available Today',
+    totalSessions: 178,
+    bio: 'Creative UX designer passionate about user-centered design. I help aspiring designers ace their portfolio reviews and design challenges with practical insights.',
+    skills: ['UI/UX Design', 'Figma', 'User Research', 'Prototyping', 'Design Systems']
+  },
+  {
+    id: '4',
+    name: 'Prof. Ashraf Hossain',
+    title: 'Data Science Director at IBM',
+    specialty: 'Data Science',
+    rating: 5.0,
+    reviews: 67,
+    experience: '12+ years',
+    price: 1800,
+    image: '/src/assets/mentor-4.jpg',
+    availability: 'Available This Week',
+    totalSessions: 134,
+    bio: 'Senior data scientist and machine learning expert. I provide in-depth preparation for data science roles including technical assessments and real-world case studies.',
+    skills: ['Machine Learning', 'Python', 'SQL', 'Statistics', 'Deep Learning', 'MLOps']
+  }
+];
