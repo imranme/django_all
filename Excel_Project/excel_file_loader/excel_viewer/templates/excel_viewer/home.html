@@ -1,0 +1,102 @@
+{% extends 'excel_viewer/base.html' %}
+
+{% block title %}Home - Excel File Viewer{% endblock %}
+
+{% block page_title %}Welcome to Excel File Viewer{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card shadow">
+            <div class="card-body text-center">
+                <h2 class="card-title mb-4">📊 Upload and View Excel Files</h2>
+                <p class="card-text lead">
+                    This application allows you to upload three Excel files at once and view their contents 
+                    in a beautiful, organized format on a single webpage.
+                </p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title">📤 Upload</h5>
+                                <p class="card-text">Upload up to 3 Excel files (.xlsx or .xls format)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-success">
+                            <div class="card-body">
+                                <h5 class="card-title">🔍 Process</h5>
+                                <p class="card-text">Files are processed securely using pandas library</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 border-info">
+                            <div class="card-body">
+                                <h5 class="card-title">📋 Display</h5>
+                                <p class="card-text">View all data in organized HTML tables</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <a href="{% url 'excel_viewer:upload' %}" class="btn btn-primary btn-lg me-3">
+                        🚀 Start Uploading Files
+                    </a>
+                    {% if request.session.excel_data %}
+                        <a href="{% url 'excel_viewer:show_data' %}" class="btn btn-success btn-lg">
+                            📊 View Current Data
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Features Section -->
+        <div class="card shadow mt-4">
+            <div class="card-header bg-light">
+                <h4 class="mb-0">✨ Features</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li>✅ Support for .xlsx and .xls files</li>
+                            <li>✅ File size validation (up to 50MB each)</li>
+                            <li>✅ Secure file processing (no permanent storage)</li>
+                            <li>✅ Responsive design for all devices</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li>✅ Real-time file information display</li>
+                            <li>✅ Clean HTML table formatting</li>
+                            <li>✅ Session-based data management</li>
+                            <li>✅ User-friendly error handling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Instructions Section -->
+        <div class="card shadow mt-4">
+            <div class="card-header bg-light">
+                <h4 class="mb-0">📝 How to Use</h4>
+            </div>
+            <div class="card-body">
+                <ol class="list-group list-group-numbered list-group-flush">
+                    <li class="list-group-item">Click on "Start Uploading Files" button above</li>
+                    <li class="list-group-item">Select three Excel files from your computer</li>
+                    <li class="list-group-item">Click "Upload and Process Files" to submit</li>
+                    <li class="list-group-item">View the processed data on the results page</li>
+                    <li class="list-group-item">Use "View Data" link to return to results anytime</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

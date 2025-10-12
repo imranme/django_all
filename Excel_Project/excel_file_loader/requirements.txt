@@ -1,0 +1,20 @@
+# Django Excel File Viewer - Requirements
+# Install these packages using: pip install -r requirements.txt
+
+# Core Django framework
+Django>=5.2.7
+
+# Excel file processing (preferred)
+pandas>=2.0.0
+openpyxl>=3.1.0
+
+# Alternative: If pandas installation fails, you can use just openpyxl
+# openpyxl>=3.1.0
+
+# Optional: For better Excel file support
+# xlrd>=2.0.0  # For older .xls files
+# xlsxwriter>=3.0.0  # For writing Excel files
+
+# Development dependencies (optional)
+# django-debug-toolbar>=4.0.0  # For debugging
+# pytest-django>=4.5.0  # For testing

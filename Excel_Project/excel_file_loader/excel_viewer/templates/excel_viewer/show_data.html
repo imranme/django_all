@@ -1,0 +1,281 @@
+{% extends 'excel_viewer/base.html' %}
+
+{% block title %}Excel Data - Excel File Viewer{% endblock %}
+
+{% block page_title %}Excel Files Data Display{% endblock %}
+
+{% block content %}
+{% if excel_data %}
+    <!-- Summary Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow border-success">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">📊 Data Summary</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <h5 class="text-primary">{{ total_files }}</h5>
+                            <small class="text-muted">Files Processed</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="text-success">
+                                {% for file in excel_data %}{{ file.rows }}{% if not forloop.last %} + {% endif %}{% endfor %}
+                            </h5>
+                            <small class="text-muted">Total Rows</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="text-info">
+                                {% for file in excel_data %}{{ file.columns }}{% if not forloop.last %} + {% endif %}{% endfor %}
+                            </h5>
+                            <small class="text-muted">Total Columns</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h5 class="text-warning">
+                                {% for file in excel_data %}{{ file.size|filesizeformat }}{% if not forloop.last %} + {% endif %}{% endfor %}
+                            </h5>
+                            <small class="text-muted">Total Size</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <a href="{% url 'excel_viewer:upload' %}" class="btn btn-primary btn-custom">
+                📤 Upload New Files
+            </a>
+            <a href="{% url 'excel_viewer:clear_session' %}" class="btn btn-warning btn-custom">
+                🗑️ Clear All Data
+            </a>
+            <button onclick="window.print()" class="btn btn-info btn-custom">
+                🖨️ Print This Page
+            </button>
+            <button onclick="exportToCSV()" class="btn btn-success btn-custom">
+                💾 Export Summary
+            </button>
+        </div>
+    </div>
+
+    <!-- Excel Files Data -->
+    {% for file in excel_data %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow excel-table">
+                    <!-- File Information Header -->
+                    <div class="card-header bg-primary text-white">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h5 class="mb-0">
+                                    📄 File {{ file.file_number }}: {{ file.filename }}
+                                </h5>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <small>
+                                    📏 {{ file.size|filesizeformat }} | 
+                                    📊 {{ file.rows }} rows × {{ file.columns }} columns
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- File Details -->
+                    <div class="file-info">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong>📋 Column Names:</strong>
+                                <ul class="list-inline mt-1">
+                                    {% for column in file.column_names %}
+                                        <li class="list-inline-item">
+                                            <span class="badge bg-secondary">{{ column }}</span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <strong>📊 Rows:</strong> {{ file.rows }}<br>
+                                        <strong>📈 Columns:</strong> {{ file.columns }}
+                                    </div>
+                                    <div class="col-6">
+                                        <strong>📏 File Size:</strong> {{ file.size|filesizeformat }}<br>
+                                        <strong>🗂️ File Number:</strong> {{ file.file_number }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Excel Data Table -->
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            {{ file.html_table|safe }}
+                        </div>
+                    </div>
+                    
+                    <!-- Table Footer with Actions -->
+                    <div class="card-footer bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <small class="text-muted">
+                                    Showing all {{ file.rows }} rows from {{ file.filename }}
+                                </small>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <button onclick="toggleTable('excel-table-{{ file.file_number }}')" 
+                                        class="btn btn-sm btn-outline-primary">
+                                    👁️ Toggle Visibility
+                                </button>
+                                <button onclick="exportTableToCSV('excel-table-{{ file.file_number }}', '{{ file.filename }}')" 
+                                        class="btn btn-sm btn-outline-success">
+                                    💾 Export Table
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    <!-- Navigation Section -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">🎉 All Files Processed Successfully!</h5>
+                    <p class="card-text">
+                        You have successfully uploaded and processed {{ total_files }} Excel files. 
+                        The data is displayed above in organized tables.
+                    </p>
+                    <a href="{% url 'excel_viewer:upload' %}" class="btn btn-primary btn-lg me-3">
+                        📤 Upload More Files
+                    </a>
+                    <a href="{% url 'excel_viewer:home' %}" class="btn btn-secondary btn-lg">
+                        🏠 Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% else %}
+    <!-- No Data Available -->
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card shadow border-warning">
+                <div class="card-body text-center">
+                    <h4 class="card-title text-warning">⚠️ No Data Available</h4>
+                    <p class="card-text">
+                        No Excel data found in your session. Please upload some Excel files first.
+                    </p>
+                    <a href="{% url 'excel_viewer:upload' %}" class="btn btn-primary btn-lg">
+                        📤 Upload Excel Files
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block javascript %}
+<script>
+// Toggle table visibility
+function toggleTable(tableId) {
+    const table = document.getElementById(tableId);
+    if (table) {
+        if (table.style.display === 'none') {
+            table.style.display = 'table';
+        } else {
+            table.style.display = 'none';
+        }
+    }
+}
+
+// Export table to CSV
+function exportTableToCSV(tableId, filename) {
+    const table = document.getElementById(tableId);
+    if (!table) return;
+    
+    let csv = [];
+    const rows = table.querySelectorAll('tr');
+    
+    for (let i = 0; i < rows.length; i++) {
+        const row = [];
+        const cols = rows[i].querySelectorAll('td, th');
+        
+        for (let j = 0; j < cols.length; j++) {
+            // Clean up the text content and escape quotes
+            let cellText = cols[j].textContent.trim();
+            cellText = cellText.replace(/"/g, '""'); // Escape quotes
+            row.push('"' + cellText + '"');
+        }
+        csv.push(row.join(','));
+    }
+    
+    // Create and download the CSV file
+    const csvString = csv.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename.replace(/\.[^/.]+$/, '') + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+}
+
+// Export summary information to CSV
+function exportToCSV() {
+    const summaryData = [
+        ['File Number', 'Filename', 'Rows', 'Columns', 'Size (bytes)', 'Column Names']
+    ];
+    
+    {% for file in excel_data %}
+        summaryData.push([
+            '{{ file.file_number }}',
+            '{{ file.filename }}',
+            '{{ file.rows }}',
+            '{{ file.columns }}',
+            '{{ file.size }}',
+            '{% for column in file.column_names %}{{ column }}{% if not forloop.last %}, {% endif %}{% endfor %}'
+        ]);
+    {% endfor %}
+    
+    const csv = summaryData.map(row => 
+        row.map(cell => '"' + String(cell).replace(/"/g, '""') + '"').join(',')
+    ).join('\n');
+    
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'excel_files_summary.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+}
+
+// Print styles
+const printStyles = `
+    <style media="print">
+        .btn, .card-footer, nav, footer { display: none !important; }
+        .card { border: 1px solid #000 !important; margin-bottom: 20px; }
+        .table { font-size: 10px; }
+        @page { margin: 0.5in; }
+    </style>
+`;
+
+document.head.insertAdjacentHTML('beforeend', printStyles);
+</script>
+{% endblock %}
